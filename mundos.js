@@ -38,26 +38,28 @@ function generarCoordenadas(mapSize, zonesNature, zonesUrban, zonesCommercial) {
         coord.push(actualCoord);
     }
 
-    return asignarCoordenadas(coord, zonesNature, zonesUrban, zonesCommercial);
+    return coord;
 };
 
-function asignarCoordenadas(coords, zonesNature, zonesUrban, zonesCommercial) {
+function asignarCoordenadas(coords, nature, urban, commercial) {
     let zones = [];
     let zoness = [];
     let inds = 0;
     let zona = 0;
-    [zonesNature, zonesUrban, zonesCommercial].forEach((I) => {
+    [nature.zones, urban.zones, commercial.zones].forEach((I) => {
         let color = "";
+        let zoneMaxSize=0;
+        let TotalMaxsize=0;
         switch (zona) {
-            case 0: color = "green";
+            case 0: {color = "green"; zoneMaxSize=nature.zoneMaxSize; TotalMaxsize=nature.TotalMaxsize}
                 break;
-            case 1: color = "yellow";
+            case 1: {color = "yellow"; zoneMaxSize=urban.zoneMaxSize; TotalMaxsize=urban.TotalMaxsize}
                 break;
-            case 2: color = "orange";
+            case 2: {color = "orange"; commercial=commercial.zoneMaxSize; TotalMaxsize=commercial.TotalMaxsize}
                 break;
         }
         for (let index = inds; index < (I + inds); index++) {
-            zones.push({ parcelas: [{ ...coords[index] }], id: I + index, "color": color });
+            zones.push({ parcelas: [{ ...coords[index] }], id: I + index, "color": color ,"ZoneMaxSize":zoneMaxSize ,"totalMaxize":TotalMaxsize});
         }
         zoness.push(...zones);
         zones = [];
@@ -68,62 +70,37 @@ function asignarCoordenadas(coords, zonesNature, zonesUrban, zonesCommercial) {
 
 }
 
-function comprobarBacio(zonas, parcelaNueva) {
-    zonas.forEach((zona) => {
-        zona.parcelas.forEach((parcela) => {
-            if (repetidos(parcela, parcelaNueva)) {
-
-                return { id: zona.id };
-            }
-        })
-    });
-    return true;
+function ocupadoPor(zonas, parcelaNueva) {
+    if (repetidos(zonas, parcelaNueva)) {
+        return zona.id;
+    }
+    return null;
 }
-//nesito buscar primera parcela libre
+
 function crecer(zonas, mapSize) {
     console.log(zonas);
-    for (let index = 0; index < zonas.length; index++) {
-        const zona = array[index];
+    zonas.forEach((zona) => {
         let parcela = zona.parcelas[Math.floor(Math.random() * zona.parcelas.length)];
         let direcion = Math.floor(Math.random() * 4);
-        let parcelaNueva;
-        let puedeCrecer = (zonas,parcelaNueva) => {
-            let buscar = comprobarBacio(zonas, parcelaNueva);
-            if (parcela.x + 1 > (mapSize - 1) || (buscar !== true && buscar.id !== zonas.id)) {
-                return false;
-            };
-            return buscar;
+        let x = 0;
+        let y = 0;
+        if (direcion === 0) x = 1;
+        if (direcion === 1) x = -1;
+        if (direcion === 2) y = 1;
+        if (direcion === 3) y = -1;
+        let nuevaParcela = { "x": (parcela.x + x), "y": (parcela.y + y) }
+
+        let idOcupado = ocupadoPor(zonas, nuevaParcela);
+
+        while (nuevaParcela.x <= mapSize && nuevaParcela.y <= mapSize) {
+            if (idOcupado === null) {
+                zona.parcelas.push(nuevaParcela);
+                break;
+            } else if (idOcupado !== zona.id) break;
+            nuevaParcela.x += x;
+            nuevaParcela.y += y;
         }
-
-
-
-        if (direcion === 0) { //x+    
-            parcelaNueva = { x: (parcela.x + 1), y: parcela.y };
-            if (puedeCrecer(zonas,parcelaNueva)===false) continue;
-            
- 
-        }
-        if (direcion === 1) { //x-
-            parcelaNueva = { x: (parcela.x - 1), y: parcela.y };
-            if (puedeCrecer(zonas,parcelaNueva)===false) continue;
-         
-        }
-        if (direcion === 2) { //y+
-            parcelaNueva = { x: (parcela.x ), y: parcela.y +1};
-            if (puedeCrecer(zonas,parcelaNueva)===false) continue;
-      
-        }
-        if (direcion === 3) { //y-
-            parcelaNueva = { x: (parcela.x + 1), y: parcela.y -1};
-            if (puedeCrecer(zonas,parcelaNueva)===false) continue;        
-        }
-
-        zona.parcelas.push({ parcelaNueva });
-    }
- 
-
-
-
+    });
 }
 
 
@@ -143,12 +120,11 @@ form.addEventListener("submit", (event) => {
     let nature = new zone([datos.get("NatureMinZones"), 2], [datos.get("NatureMaxZones"), 8], [datos.get("NatureZoneMaxSize"), 500], [datos.get("NatureTotalMaxsize"), 800]);
     let urban = new zone([datos.get("UrbanMinZones"), 4], [datos.get("UrbanMaxZones"), 6], [datos.get("UrbanZoneMaxsize"), 100], [datos.get("UrbanTotalMaxsize"), 800]);
     let commercial = new zone([datos.get("commercialMinZones"), 2], [datos.get("commercialMaxZones"), 8], [datos.get("commercialZoneMaxsize"), 50], [datos.get("commercialTotalMaxsize"), 200]);
+    
+    nature.zones= Math.round(Math.random() * (nature.maxZones - nature.minZones)) + nature.minZones;
+    urban.zones= Math.round(Math.random() * (urban.maxZones - urban.minZones)) + urban.minZones;
+    commercial.zones=Math.round(Math.random() * (commercial.maxZones - commercial.minZones)) + commercial.minZones;
 
-
-
-    let zonesNature = Math.round(Math.random() * (nature.maxZones - nature.minZones)) + nature.minZones;
-    let zonesUrban = Math.round(Math.random() * (urban.maxZones - urban.minZones)) + urban.minZones;
-    let zonesCommercial = Math.round(Math.random() * (commercial.maxZones - commercial.minZones)) + commercial.minZones;
     let mapSize = datos.get("CamposMapSize") === '' ? 65 : form.get("CamposMapSize");
     canvas.width = mapSize;
     canvas.height = mapSize;
@@ -157,9 +133,12 @@ form.addEventListener("submit", (event) => {
     //console.log( zonesNature,zonesUrban, zonesCommercial);
 
 
-    let zonas = generarCoordenadas(mapSize, zonesNature, zonesUrban, zonesCommercial);
+    let coord = generarCoordenadas(mapSize, nature.zones, urban.zones, commercial.zones);
+
+    let zones = asignarCoordenadas(coord, nature, urban, commercial)
     //console.log(zonas);
-    crecer(zonas, mapSize);
+    
+    crecer(zones, mapSize);
 
 
 
