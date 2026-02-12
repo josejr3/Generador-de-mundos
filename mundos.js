@@ -35,12 +35,12 @@ form.addEventListener("submit",(event)=>{
    //container.appendChild(canvas);
    //canvas.getContext("2d");
 
-   let zonesNature=  Math.round(Math.random() * (datos.get("NatureMinZones") - datos.get("NatureMaxZones") + 1)) + datos.get("NatureMinZones");
-   let zonesUrban=  Math.round(Math.random() * (datos.get("UrbanMinZones") - datos.get("UrbanMaxZones") + 1)) + datos.get("UrbanMinZones");
-   let zonesCommercial=  Math.round(Math.random() * (datos.get("commercialMinZones") - datos.get("commercialMaxZones") + 1)) + datos.get("commercialMinZones");
+   let zonesNature=  Math.round(Math.random() * (nature.minZones - nature.maxZones) + 1) + nature.minZones;
+   let zonesUrban=  Math.round(Math.random() * (urban.minZones - urban.maxZones + 1)) + urban.minZones;
+   let zonesCommercial=  Math.round(Math.random() * (commercial.minZones - commercial.maxZones + 1)) + commercial.maxZones;
+
    let mapSize=datos.get("CamposMapSize")===''? 65:form.get("CamposMapSize");
    console.log(mapSize);
-   console.log(Math.floor(Math.random()*mapSize));
 
    const generar=()=>   ({
     "x":Math.floor(Math.random()*mapSize),

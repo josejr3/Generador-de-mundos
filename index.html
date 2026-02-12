@@ -10,68 +10,105 @@
 </head>
 
 <body>
-    <div id="container" class="container">
-        <form action="" id="datos" class="row">
-            <div class="form-label col-7">Campos</div>
-            <label for="CamposMapSize" class="form-label col-7"> Map zize
-                <input type="text" class="form-control col-7" name="CamposMapSize">
-            </label>
-            <label for="CamposMaxOcupedArea" class="form-label col-7"> Max ocuped area
-                <input type="text" class="form-control col-7" name="CamposMaxOcupedArea">
-            </label>
-            <div class="form-label col-7">Nature</div>
-            <label for="NatureMinZones" class="form-label col-7"> Min zones
-                <input type="text" class="form-control col-7" name="NatureMinZones">
-            </label>
-            <label for="NatureMaxZones" class="form-label col-7"> Max zones
-                <input type="text" class="form-control col-7" name="NatureMaxZones">
-            </label>
-            <label for="NatureZoneMaxSize" class="form-label col-7"> Zone Max size
-                <input type="text" class="form-control col-7" name="NatureZoneMaxSize">
-            </label>
-            <label for="NatureTotalMaxsize" class="form-label col-7"> Total max size
-                <input type="text" class="form-control col-7" name="NatureTotalMaxsize">
-            </label>
-            <div class="form-label col-7">Urban</div>
+    <div class="container mt-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h4 class="card-title text-center mb-4">Generador de Mapa</h4>
 
-             <label for="UrbanMinZones" class="form-label col-7"> Min  zones
-                <input type="text" class="form-control col-7" name="UrbanMinZones">
-            </label>
+                <form action="" id="datos" class="row g-3">
 
-            <label for="UrbanMaxZones" class="form-label col-7"> Max zones
-                <input type="text" class="form-control col-7" name="UrbanMaxZones">
-            </label>
+                    <div class="col-12">
+                        <h5 class="text-secondary border-bottom pb-2">Configuración General</h5>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="CamposMapSize" class="form-label">Map Size</label>
+                        <input type="number" class="form-control" name="CamposMapSize" id="CamposMapSize"
+                            placeholder="Default: 65">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="CamposMaxOcupedArea" class="form-label">Max Occupied Area</label>
+                        <input type="number" class="form-control" name="CamposMaxOcupedArea" id="CamposMaxOcupedArea">
+                    </div>
 
-            <label for="UrbanZoneMaxsize" class="form-label col-7"> Zone Max size
-                <input type="text" class="form-control col-7" name="UrbanZoneMaxsize">
-            </label>
+                    <div class="col-12 mt-4">
+                        <h5 class="text-success border-bottom pb-2">Nature</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="NatureMinZones" class="form-label">Min Zones</label>
+                        <input type="number" class="form-control" name="NatureMinZones" id="NatureMinZones"
+                            placeholder="Def: 2">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="NatureMaxZones" class="form-label">Max Zones</label>
+                        <input type="number" class="form-control" name="NatureMaxZones" id="NatureMaxZones"
+                            placeholder="Def: 8">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="NatureZoneMaxSize" class="form-label">Zone Max Size</label>
+                        <input type="number" class="form-control" name="NatureZoneMaxSize" id="NatureZoneMaxSize"
+                            placeholder="Def: 500">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="NatureTotalMaxsize" class="form-label">Total Max Size</label>
+                        <input type="number" class="form-control" name="NatureTotalMaxsize" id="NatureTotalMaxsize"
+                            placeholder="Def: 800">
+                    </div>
 
-            <label for="UrbanTotalMaxsize" class="form-label col-7"> Total max size
-                <input type="text" class="form-control col-7" name="UrbanTotalMaxsize">
-            </label>
-            
-            
-            <div class="form-label col-7">commercial</div>
+                    <div class="col-12 mt-4">
+                        <h5 class="text-primary border-bottom pb-2">Urban</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="UrbanMinZones" class="form-label">Min Zones</label>
+                        <input type="number" class="form-control" name="UrbanMinZones" id="UrbanMinZones"
+                            placeholder="Def: 4">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="UrbanMaxZones" class="form-label">Max Zones</label>
+                        <input type="number" class="form-control" name="UrbanMaxZones" id="UrbanMaxZones"
+                            placeholder="Def: 6">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="UrbanZoneMaxsize" class="form-label">Zone Max Size</label>
+                        <input type="number" class="form-control" name="UrbanZoneMaxsize" id="UrbanZoneMaxsize"
+                            placeholder="Def: 100">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="UrbanTotalMaxsize" class="form-label">Total Max Size</label>
+                        <input type="number" class="form-control" name="UrbanTotalMaxsize" id="UrbanTotalMaxsize"
+                            placeholder="Def: 800">
+                    </div>
 
-            <label for="commercialMinZones" class="form-label col-7"> Min zones
-                <input type="text" class="form-control col-7" name="commercialMinZones">
-            </label>
+                    <div class="col-12 mt-4">
+                        <h5 class="text-warning border-bottom pb-2">Commercial</h5>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="commercialMinZones" class="form-label">Min Zones</label>
+                        <input type="number" class="form-control" name="commercialMinZones" id="commercialMinZones"
+                            placeholder="Def: 2">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="commercialMaxZones" class="form-label">Max Zones</label>
+                        <input type="number" class="form-control" name="commercialMaxZones" id="commercialMaxZones"
+                            placeholder="Def: 8">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="commercialZoneMaxsize" class="form-label">Zone Max Size</label>
+                        <input type="number" class="form-control" name="commercialZoneMaxsize"
+                            id="commercialZoneMaxsize" placeholder="Def: 50">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="commercialTotalMaxsize" class="form-label">Total Max Size</label>
+                        <input type="number" class="form-control" name="commercialTotalMaxsize"
+                            id="commercialTotalMaxsize" placeholder="Def: 200">
+                    </div>
 
-            <label for="commercialMaxZones" class="form-label col-7"> Max zones
-                <input type="text" class="form-control col-7" name="commercialMaxZones">
-            </label>
-
-            <label for="commercialZoneMaxsize" class="form-label col-7"> Zone Max size
-                <input type="text" class="form-control col-7" name="commercialZoneMaxsize">
-            </label>
-
-            <label for="commercialTotalMaxsize" class="form-label col-7"> Total max size
-                <input type="text" class="form-control col-7" name="commercialTotalMaxsize">
-            </label>
-            <button type="submit" class="btn btn-primary">Generar</button>
-        </form>
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-primary w-100 fw-bold py-2">Generar Mapa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
 </body>
 <script src="mundos.js"></script>
 
